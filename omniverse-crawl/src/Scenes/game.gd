@@ -18,16 +18,10 @@ func _ready() -> void:
 	entities.add_child(npc)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	var action: Action = event_handler.get_action()
-	
-	if action is MovementAction:
-		player.move(action.offset)
-	elif action is EscapeAction:
-		get_tree().quit(33) ## 33 is good!
-	
-	pass
+	if action:
+		action.perform(self,player)
 
 
 func get_map_data() -> MapData:

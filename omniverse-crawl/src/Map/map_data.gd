@@ -14,7 +14,7 @@ var tiles: Array[Tile]
 func _init(map_width:int,map_height:int) -> void:
 	width = map_width
 	height = map_height
-	# _setup
+	_setup_tiles()
 	
 
 func _setup_tiles() -> void:
