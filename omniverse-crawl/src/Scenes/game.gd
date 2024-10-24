@@ -8,12 +8,15 @@ const PLAYER_DEFINITION: EntityDefinition = preload("res://src/Entities/Actors/e
 @onready var entities: Node2D = $Entities
 @onready var map: Map = $Map
 @onready var camera: Camera2D = $Camera2D
+@onready var torch: PointLight2D = $PointLight2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player = Entity.new(Vector2i.ZERO, PLAYER_DEFINITION)
 	entities.add_child(player)
 	camera.reparent(player)
+	torch.reparent(player)
+	torch.offset = Vector2i(player.texture.get_size()/2)
 	#var npc := Entity.new(player_start_pos + Vector2i.RIGHT,PLAYER_DEFINITION)
 	#npc.modulate = Color.ORANGE
 	#entities.add_child(npc)
