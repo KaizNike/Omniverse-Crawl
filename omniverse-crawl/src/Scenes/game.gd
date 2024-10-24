@@ -29,7 +29,15 @@ func _physics_process(delta: float) -> void:
 	if action:
 		var previous_player_position: Vector2i = player.grid_position
 		action.perform(self,player)
-		if player.grid_position != previous_player_position:
+		if action is SnuffTorchAction:
+			if action.is_torch_out:
+				map.fov_radius = 1
+				torch.visible = false
+			else:
+				map.fov_radius = 8
+				torch.visible = true
+		if (player.grid_position != previous_player_position or 
+		action is SnuffTorchAction):
 			map.update_fov(player.grid_position)
 
 
