@@ -7,7 +7,7 @@ func get_action() -> Action:
 	var action: Action = null
 	var dir = Input.get_vector("ui_left","ui_right","ui_up","ui_down")
 	if dir and (Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down") or Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right")):
-		action = MovementAction.new(dir.x,dir.y)
+		action = BumpAction.new(dir.x,dir.y)
 	if Input.is_action_just_pressed("sneak"):
 		action = SnuffTorchAction.new()
 		is_torch_out = !is_torch_out

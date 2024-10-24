@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=4 format=3 uid="uid://c1mqc65narhb6"]
+
+[ext_resource type="Script" path="res://src/Entities/entity_definition.gd" id="1_t5mn7"]
+[ext_resource type="Texture2D" uid="uid://dxyga6bb4en5s" path="res://Assets/Kenney - 1bit Pack/Tilesheet/colored_packed.png" id="2_n67xu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wyml"]
+atlas = ExtResource("2_n67xu")
+region = Rect2(416, 48, 16, 16)
+
+[resource]
+script = ExtResource("1_t5mn7")
+name = "Orc"
+texture = SubResource("AtlasTexture_4wyml")
+color = Color(0.224198, 0.469883, 0.291273, 1)
+is_blocking_movement = true

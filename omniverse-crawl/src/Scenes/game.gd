@@ -5,7 +5,6 @@ const PLAYER_DEFINITION: EntityDefinition = preload("res://src/Entities/Actors/e
 
 @onready var player: Entity
 @onready var event_handler: EventHandler = $EventHandler
-@onready var entities: Node2D = $Entities
 @onready var map: Map = $Map
 @onready var camera: Camera2D = $Camera2D
 @onready var torch: PointLight2D = $PointLight2D
@@ -13,7 +12,6 @@ const PLAYER_DEFINITION: EntityDefinition = preload("res://src/Entities/Actors/e
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player = Entity.new(Vector2i.ZERO, PLAYER_DEFINITION)
-	entities.add_child(player)
 	camera.reparent(player)
 	torch.reparent(player)
 	torch.offset = Vector2i(player.texture.get_size()/2)
@@ -29,6 +27,7 @@ func _physics_process(delta: float) -> void:
 	if action:
 		var previous_player_position: Vector2i = player.grid_position
 		action.perform(self,player)
+		_handle_enemy_turns()
 		if action is SnuffTorchAction:
 			if action.is_torch_out:
 				map.fov_radius = 1
@@ -43,3 +42,10 @@ func _physics_process(delta: float) -> void:
 
 func get_map_data() -> MapData:
 	return map.map_data
+
+
+func _handle_enemy_turns() -> void:
+	for entity in get_map_data().entities:
+		if entity == player:
+			continue
+		print("The %s might take a turn someday, it stands defiantly." % entity.get_entity_name())
