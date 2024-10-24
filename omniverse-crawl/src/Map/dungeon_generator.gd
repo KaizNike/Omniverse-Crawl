@@ -13,8 +13,9 @@ extends Node
 var _rng := RandomNumberGenerator.new()
 
 
-func _ready() -> void:
-	_rng.randomize()
+#func _ready() -> void:
+	##_rng.randomize()		## Not nessecary, _rng starts randomly
+	#pass
 	
 	
 func _carve_tile(dungeon: MapData, x: int, y: int) -> void:

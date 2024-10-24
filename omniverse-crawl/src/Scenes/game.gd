@@ -7,11 +7,10 @@ const PLAYER_DEFINITION: EntityDefinition = preload("res://src/Entities/Actors/e
 @onready var event_handler: EventHandler = $EventHandler
 @onready var entities: Node2D = $Entities
 @onready var map: Map = $Map
+@onready var camera: Camera2D = $Camera2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#var player_start_pos: Vector2i = Grid.convert_world_to_grid(get_viewport_rect().size.floor() / 2)
-	var camera: Camera2D = $Camera2D
 	player = Entity.new(Vector2i.ZERO, PLAYER_DEFINITION)
 	entities.add_child(player)
 	camera.reparent(player)
@@ -19,12 +18,16 @@ func _ready() -> void:
 	#npc.modulate = Color.ORANGE
 	#entities.add_child(npc)
 	map.generate(player)
+	map.update_fov(player.grid_position)
 
 
 func _physics_process(delta: float) -> void:
 	var action: Action = event_handler.get_action()
 	if action:
+		var previous_player_position: Vector2i = player.grid_position
 		action.perform(self,player)
+		if player.grid_position != previous_player_position:
+			map.update_fov(player.grid_position)
 
 
 func get_map_data() -> MapData:
