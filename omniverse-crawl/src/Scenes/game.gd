@@ -10,12 +10,15 @@ const PLAYER_DEFINITION: EntityDefinition = preload("res://src/Entities/Actors/e
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var player_start_pos: Vector2i = Grid.convert_world_to_grid(get_viewport_rect().size.floor() / 2)
-	player = Entity.new(player_start_pos, PLAYER_DEFINITION)
+	#var player_start_pos: Vector2i = Grid.convert_world_to_grid(get_viewport_rect().size.floor() / 2)
+	var camera: Camera2D = $Camera2D
+	player = Entity.new(Vector2i.ZERO, PLAYER_DEFINITION)
 	entities.add_child(player)
-	var npc := Entity.new(player_start_pos + Vector2i.RIGHT,PLAYER_DEFINITION)
-	npc.modulate = Color.ORANGE
-	entities.add_child(npc)
+	camera.reparent(player)
+	#var npc := Entity.new(player_start_pos + Vector2i.RIGHT,PLAYER_DEFINITION)
+	#npc.modulate = Color.ORANGE
+	#entities.add_child(npc)
+	map.generate(player)
 
 
 func _physics_process(delta: float) -> void:
