@@ -4,14 +4,14 @@ extends Node2D
 const PLAYER_DEFINITION: EntityDefinition = preload("res://src/Entities/Actors/entity_definition_player.tres")
 
 @onready var player: Entity
-@onready var event_handler: EventHandler = $EventHandler
+@onready var input_handler: InputHandler = $InputHandler
 @onready var map: Map = $Map
 @onready var camera: Camera2D = $Camera2D
 @onready var torch: PointLight2D = $PointLight2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	player = Entity.new(Vector2i.ZERO, PLAYER_DEFINITION)
+	player = Entity.new(null, Vector2i.ZERO, PLAYER_DEFINITION)
 	camera.reparent(player)
 	torch.reparent(player)
 	torch.offset = Vector2i(player.texture.get_size()/2)
@@ -23,10 +23,10 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var action: Action = event_handler.get_action()
+	var action: Action = input_handler.get_action(player)
 	if action:
 		var previous_player_position: Vector2i = player.grid_position
-		action.perform(self,player)
+		action.perform()
 		_handle_enemy_turns()
 		if action is SnuffTorchAction:
 			if action.is_torch_out:
@@ -48,4 +48,4 @@ func _handle_enemy_turns() -> void:
 	for entity in get_map_data().entities:
 		if entity == player:
 			continue
-		print("The %s might take a turn someday, it stands defiantly." % entity.get_entity_name())
+		#print("The %s might take a turn someday, it stands defiantly." % entity.get_entity_name())

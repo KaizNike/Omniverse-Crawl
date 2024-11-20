@@ -20,7 +20,7 @@ var is_in_view: bool = false:
 func _init(grid_position: Vector2i, tile_definition: TileDefinition) -> void:
 	visible = false
 	centered = false
-	position = Grid.convert_grid_to_world(grid_position)
+	position = Grid.grid_to_world(grid_position)
 	set_tile_type(tile_definition)
 	
 
